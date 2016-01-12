@@ -6,6 +6,8 @@ An experimental demo where a 3D perspective preview is shown for a selected seat
 
 [Demo](http://tympanus.net/Development/SeatPreview/)
 
+![Featured Image Cinema Seat Preview](http://tympanus.net/codrops/wp-content/uploads/2016/01/CinemaSeatPreviewExperiment.jpg)
+
 ## License
 
 Integrate or build upon it for free in your personal or commercial projects. Don't republish, redistribute or sell "as-is". 

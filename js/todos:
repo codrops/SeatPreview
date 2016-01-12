@@ -1,0 +1,11 @@
+todos:
+
+- adding transform: scale3d(1,1,1); to the plan solves the 3d bug flicker on the map (bug still persists but on the color of the roof)
+- real seats that are reserved should have the same color like in the plan. Also change colors of seats when selecting seats..
+- bug: gaps in the left wall 
+- try to add again the bottom floor
+- bug: in firefox when going to some seats theres a flickering of the side walls
+- mobile view
+- possibility to click on a seat to select/preview
+- possibility to switch between movies/seat plans
+- lebels/tooltips on planseats (and also seats?)

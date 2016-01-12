@@ -8,6 +8,8 @@ An experimental demo where a 3D perspective preview is shown for a selected seat
 
 ![Featured Image Cinema Seat Preview](http://tympanus.net/codrops/wp-content/uploads/2016/01/CinemaSeatPreviewExperiment.jpg)
 
+Check out the version by Sebastian Troć where the real seats are colored, too: [SebastianTroc/SeatPreview](https://github.com/SebastianTroc/SeatPreview)
+
 ## License
 
 Integrate or build upon it for free in your personal or commercial projects. Don't republish, redistribute or sell "as-is". 

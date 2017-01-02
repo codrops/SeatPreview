@@ -277,6 +277,9 @@
 
 	// select a seat on the seat plan
 	function selectSeat(planseat) {
+		// the real seat
+		var seat = seats[planseats.indexOf(planseat)];
+
 		if( classie.has(planseat, 'row__seat--reserved') ) {
 			return false;
 		}
@@ -286,9 +289,8 @@
 		}
 		// add selected class
 		classie.add(planseat, 'row__seat--selected');
+		classie.add(seat, 'row__seat--selected');
 
-		// the real seat
-		var seat = seats[planseats.indexOf(planseat)];
 		// show the seat´s perspective
 		previewSeat(seat);
 	}

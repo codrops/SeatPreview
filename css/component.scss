@@ -150,6 +150,16 @@ $cube_z: 3000px;
 	background-size: 100%;
 }
 
+.rows--large .row__seat--reserved {
+	-webkit-filter: hue-rotate(170deg) saturate(80);
+	filter: hue-rotate(170deg) saturate(80);
+}
+
+.rows--large .row__seat--selected {
+	-webkit-filter: hue-rotate(240deg) saturate(60);
+	filter: hue-rotate(240deg) saturate(60);
+}
+
 .rows--mini .row__seat:nth-child(9) {
 	margin-right: 15px;
 }

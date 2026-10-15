@@ -1,12 +1,12 @@
 /**
  * main.js
- * http://www.codrops.com
+ * https://www.codrops.com
  *
  * Licensed under the MIT license.
- * http://www.opensource.org/licenses/mit-license.php
- * 
+ * https://opensource.org/licenses/MIT
+ *
  * Copyright 2015, Codrops
- * http://www.codrops.com
+ * https://www.codrops.com
  */
 ;(function(window) {
 
@@ -15,76 +15,6 @@
 	/**
 	 * some helper functions
 	 */
-	
-	/**********************************************/
-	/** https://gist.github.com/desandro/1866474 **/
-	/**********************************************/
-	var lastTime = 0;
-	var prefixes = 'webkit moz ms o'.split(' ');
-	// get unprefixed rAF and cAF, if present
-	var requestAnimationFrame = window.requestAnimationFrame;
-	var cancelAnimationFrame = window.cancelAnimationFrame;
-	// loop through vendor prefixes and get prefixed rAF and cAF
-	var prefix;
-	for( var i = 0; i < prefixes.length; i++ ) {
-		if ( requestAnimationFrame && cancelAnimationFrame ) {
-			break;
-		}
-		prefix = prefixes[i];
-		requestAnimationFrame = requestAnimationFrame || window[ prefix + 'RequestAnimationFrame' ];
-		cancelAnimationFrame  = cancelAnimationFrame  || window[ prefix + 'CancelAnimationFrame' ] ||
-		window[ prefix + 'CancelRequestAnimationFrame' ];
-	}
-
-	// fallback to setTimeout and clearTimeout if either request/cancel is not supported
-	if ( !requestAnimationFrame || !cancelAnimationFrame ) {
-		requestAnimationFrame = function( callback, element ) {
-			var currTime = new Date().getTime();
-			var timeToCall = Math.max( 0, 16 - ( currTime - lastTime ) );
-			var id = window.setTimeout( function() {
-				callback( currTime + timeToCall );
-			}, timeToCall );
-			lastTime = currTime + timeToCall;
-			return id;
-		};
-
-		cancelAnimationFrame = function( id ) {
-			window.clearTimeout( id );
-		};
-	}
-
-	function throttle(fn, delay) {
-		var allowSample = true;
-
-		return function(e) {
-			if (allowSample) {
-				allowSample = false;
-				setTimeout(function() { allowSample = true; }, delay);
-				fn(e);
-			}
-		};
-	}
-
-	// from http://www.quirksmode.org/js/events_properties.html#position
-	function getMousePos(e) {
-		var posx = 0;
-		var posy = 0;
-		if (!e) var e = window.event;
-		if (e.pageX || e.pageY) 	{
-			posx = e.pageX;
-			posy = e.pageY;
-		}
-		else if (e.clientX || e.clientY) 	{
-			posx = e.clientX + document.body.scrollLeft
-				+ document.documentElement.scrollLeft;
-			posy = e.clientY + document.body.scrollTop
-				+ document.documentElement.scrollTop;
-		}
-		return {
-			x : posx,
-			y : posy
-		}
-	}
 
 	// equation of a line
 	function lineEq(y2, y1, x2, x1, currentVal) {
@@ -95,23 +25,13 @@
 		return m * currentVal + b;
 	}
 
-	var support = {transitions : Modernizr.csstransitions},
-		transEndEventNames = {'WebkitTransition': 'webkitTransitionEnd', 'MozTransition': 'transitionend', 'OTransition': 'oTransitionEnd', 'msTransition': 'MSTransitionEnd', 'transition': 'transitionend'},
-		transEndEventName = transEndEventNames[Modernizr.prefixed('transition')],
-		onEndTransition = function(el, callback) {
+	var onEndTransition = function(el, callback) {
 			var onEndCallbackFn = function( ev ) {
-				if( support.transitions ) {
-					if( ev.target != this ) return;
-					this.removeEventListener( transEndEventName, onEndCallbackFn );
-				}
+				if( ev.target != this ) return;
+				this.removeEventListener( 'transitionend', onEndCallbackFn );
 				if( callback && typeof callback === 'function' ) { callback.call(this); }
 			};
-			if( support.transitions ) {
-				el.addEventListener( transEndEventName, onEndCallbackFn );
-			}
-			else {
-				onEndCallbackFn();
-			}
+			el.addEventListener( 'transitionend', onEndCallbackFn );
 		},
 		// main container
 		container = document.querySelector('.container'),
@@ -127,6 +47,8 @@
 		plan = document.querySelector('.plan'),
 		// seats on the plan/map
 		planseats = [].slice.call(plan.querySelectorAll('.row__seat')),
+		// the plan seat that gets the focus when tabbing into the plan
+		tabSeat,
 		// the screen
 		monitor = room.querySelector('.screen'),
 		// the video element
@@ -146,15 +68,21 @@
 		},
 		// controls whether the tilt is active or not
 		tilt = false,
+		// the last mouse position and the frame that applies it (one tilt update per frame)
+		mousepos, tiltFrame,
+		// the users who prefer reduced motion get a crossfade instead of the camera moves
+		reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)'),
 		// window sizes
 		winsize = {width: window.innerWidth, height: window.innerHeight},
+		// the frame that applies a window resize (one per frame)
+		resizeFrame,
 		// width of one seat
 		seat_width = seats[0].offsetWidth,
 		// number of seats per row
 		seats_row = rows[0].children.length,
-		// the sum of the room´s left margin with the room´s right margin is four times the width of a seat 
+		// the sum of the room´s left margin with the room´s right margin is four times the width of a seat
 		side_margin = 4 * seat_width,
-		
+
 		// if the following is changed, the CSS values also need to be adjusted (and vice-versa)
 		// distance from first row to the screen
 		row_front_gap = 800,
@@ -189,36 +117,72 @@
 		scaleRoom();
 		// initial view (zoomed screen)
 		applyRoomTransform({'translateX' : 0, 'translateY' : 0, 'translateZ' : 1300, 'rotateX' : 0, 'rotateY' : 0});
+		// the seat plan is a single tab stop (the arrow keys move between the seats)
+		setTabSeat(planseats[0]);
 		// bind events
 		initEvents();
+		// show the page once the images visible on load are ready
+		preloadImages();
+	}
+
+	// the poster and the intro icons: the page shows when they´re decoded, so nothing pops in
+	function preloadImages() {
+		var images = [video.poster, 'img/camera.svg', 'img/seats.svg', 'img/play.svg'].map(function(src) {
+			var img = new Image();
+			img.src = src;
+			return img.decode();
+		});
+		Promise.allSettled(images).then(function() {
+			document.body.classList.remove('loading');
+		});
 	}
 
 	function applyRoomTransform(transform) {
-		room.style.WebkitTransform = room.style.transform = transform ? 'translate3d(0,0,' + perspective + 'px) rotate3d(1,0,0,' + transform.rotateX + 'deg) rotate3d(0,1,0,' + transform.rotateY + 'deg) translate3d(' + transform.translateX + 'px, ' + transform.translateY + 'px, ' + transform.translateZ + 'px)'
-																	  : 'translate3d(0,0,' + perspective + 'px) rotate3d(1,0,0,' + roomTransform.rotateX + 'deg) rotate3d(0,1,0,' + roomTransform.rotateY + 'deg) translate3d(' + roomTransform.translateX + 'px, ' + roomTransform.translateY + 'px, ' + roomTransform.translateZ + 'px)';
+		room.style.transform = transform ? 'translate3d(0,0,' + perspective + 'px) rotate3d(1,0,0,' + transform.rotateX + 'deg) rotate3d(0,1,0,' + transform.rotateY + 'deg) translate3d(' + transform.translateX + 'px, ' + transform.translateY + 'px, ' + transform.translateZ + 'px)'
+										 : 'translate3d(0,0,' + perspective + 'px) rotate3d(1,0,0,' + roomTransform.rotateX + 'deg) rotate3d(0,1,0,' + roomTransform.rotateY + 'deg) translate3d(' + roomTransform.translateX + 'px, ' + roomTransform.translateY + 'px, ' + roomTransform.translateZ + 'px)';
 	}
 
 	function applyRoomTransition(settings) {
 		var settings = settings || transitionOpts;
-		room.style.WebkitTransition = '-webkit-transform ' + settings.speed + 'ms ' + settings.easing;
 		room.style.transition = 'transform ' + settings.speed + 'ms ' + settings.easing;
 	}
 
 	function removeRoomTransition() {
-		room.style.WebkitTransition = room.style.transition = 'none';
+		room.style.transition = 'none';
 	}
 
 	function scaleRoom() {
-		var factor = winsize.width / roomsize.x;
-		container.style.WebkitTransform = container.style.transform = 'scale3d(' + factor + ',' + factor + ',1)';
+		// fit the room to the viewport´s width, or to its height in wide and short windows
+		var factor = Math.min(winsize.width / roomsize.x, winsize.height / roomsize.y);
+		container.style.transform = 'scale3d(' + factor + ',' + factor + ',1)';
 	}
 
 	function initEvents() {
 		// select a seat
-		var onSeatSelect = function(ev) { selectSeat(ev.target); };
+		var onSeatSelect = function(ev) {
+			setTabSeat(ev.target);
+			selectSeat(ev.target);
+		};
 		planseats.forEach(function(planseat) {
 			planseat.addEventListener('click', onSeatSelect);
 		});
+
+		// the arrow keys move the focus between the plan seats (left/right within the row)
+		var onPlanKeydown = function(ev) {
+			var pos = planseats.indexOf(ev.target),
+				moves = {'ArrowLeft' : -1, 'ArrowRight' : 1, 'ArrowUp' : -seats_row, 'ArrowDown' : seats_row},
+				move = moves[ev.key],
+				next = pos + move;
+
+			if( pos === -1 || !move ) return;
+			ev.preventDefault();
+			if( next < 0 || next >= planseats.length ) return;
+			if( Math.abs(move) === 1 && Math.floor(next / seats_row) !== Math.floor(pos / seats_row) ) return;
+
+			setTabSeat(planseats[next]);
+			planseats[next].focus();
+		};
+		plan.addEventListener('keydown', onPlanKeydown);
 
 		// enabling/disabling the tilt
 		var onTiltCtrlClick = function() {
@@ -234,14 +198,19 @@
 
 		// mousemove event / tilt functionality
 		var onMouseMove = function(ev) {
-			requestAnimationFrame(function() {
+			if( !tilt ) return false;
+
+			mousepos = {x : ev.clientX, y : ev.clientY};
+			if( tiltFrame ) return;
+
+			tiltFrame = requestAnimationFrame(function() {
+				tiltFrame = null;
 				if( !tilt ) return false;
 
-				var mousepos = getMousePos(ev),
-					// transform values
-					rotX = tiltRotation.rotateX ? roomTransform.rotateX -  (2 * tiltRotation.rotateX / winsize.height * mousepos.y - tiltRotation.rotateX) : 0,
+				// transform values
+				var rotX = tiltRotation.rotateX ? roomTransform.rotateX -  (2 * tiltRotation.rotateX / winsize.height * mousepos.y - tiltRotation.rotateX) : 0,
 					rotY = tiltRotation.rotateY ? roomTransform.rotateY +  (2 * tiltRotation.rotateY / winsize.width * mousepos.x - tiltRotation.rotateY) : 0;
-		
+
 				// apply transform
 				applyRoomTransform({'translateX' : roomTransform.translateX, 'translateY' : roomTransform.translateY, 'translateZ' : roomTransform.translateZ, 'rotateX' : rotX, 'rotateY' : rotY});
 			});
@@ -249,13 +218,17 @@
 		document.addEventListener('mousemove', onMouseMove);
 
 		// select seats control click (intro button): show the room layout
-		var onSelectSeats = function() { 
-			classie.remove(intro, 'intro--shown');
-			classie.add(plan, 'plan--shown');
-			classie.add(playCtrl, 'action--faded');
+		var onSelectSeats = function() {
+			intro.classList.remove('intro--shown');
+			// the intro slides out of the screen: its controls go out of reach too
+			intro.inert = true;
+			plan.classList.add('plan--shown');
+			playCtrl.classList.add('action--faded');
+			// the focus moves on to the plan
+			tabSeat.focus({preventScroll : true});
 			zoomOutScreen(function() {
 				showTiltCtrl();
-			}); 
+			});
 		};
 		selectSeatsCtrl.addEventListener('click', onSelectSeats);
 
@@ -265,27 +238,45 @@
 		video.addEventListener('ended', videoLoad);
 
 		// window resize: update window size
-		window.addEventListener('resize', throttle(function(ev) {
-			winsize = {width: window.innerWidth, height: window.innerHeight};
-			scaleRoom();
-		}, 10));
+		window.addEventListener('resize', function() {
+			cancelAnimationFrame(resizeFrame);
+			resizeFrame = requestAnimationFrame(function() {
+				winsize = {width: window.innerWidth, height: window.innerHeight};
+				scaleRoom();
+			});
+		});
 	}
 
 	function showTiltCtrl() {
-		classie.add(tiltCtrl, 'action--shown');
+		tiltCtrl.classList.add('action--shown');
+		tiltCtrl.inert = false;
+	}
+
+	// the plan seat that gets the focus when tabbing into the plan
+	function setTabSeat(planseat) {
+		if( tabSeat ) {
+			tabSeat.tabIndex = -1;
+		}
+		else {
+			planseats.forEach(function(el) { el.tabIndex = -1; });
+		}
+		tabSeat = planseat;
+		tabSeat.tabIndex = 0;
 	}
 
 	// select a seat on the seat plan
 	function selectSeat(planseat) {
-		if( classie.has(planseat, 'row__seat--reserved') ) {
+		if( planseat.classList.contains('row__seat--reserved') ) {
 			return false;
 		}
-		if( classie.has(planseat, 'row__seat--selected') ) {
-			classie.remove(planseat, 'row__seat--selected');
+		if( planseat.classList.contains('row__seat--selected') ) {
+			planseat.classList.remove('row__seat--selected');
+			planseat.setAttribute('aria-pressed', 'false');
 			return false;
 		}
 		// add selected class
-		classie.add(planseat, 'row__seat--selected');
+		planseat.classList.add('row__seat--selected');
+		planseat.setAttribute('aria-pressed', 'true');
 
 		// the real seat
 		var seat = seats[planseats.indexOf(planseat)];
@@ -297,28 +288,14 @@
 	function previewSeat(seat) {
 		// disable tilt
 		disableTilt();
-		// change transition properties
-		applyRoomTransition();
-		// getComputedStyle: https://css-tricks.com/get-value-of-css-rotation-through-javascript/
-		var st = window.getComputedStyle(seat.parentNode, null),
-			tr = st.getPropertyValue('-webkit-transform') ||
-				 st.getPropertyValue('-moz-transform') ||
-				 st.getPropertyValue('-ms-transform') ||
-				 st.getPropertyValue('-o-transform') ||
-				 st.getPropertyValue('transform') ||
-				 'Either no transform set, or browser doesn´t do getComputedStyle';
-			
-		if( tr === 'none' ) return;
-		
-		var values = tr.split('(')[1],
-			values = values.split(')')[0],
-			values = values.split(','),
-			
+		// the transform of this seat´s row
+		var rowTransform = new DOMMatrix(window.getComputedStyle(seat.parentNode).transform),
+
 			// translateY value of this seat´s row
-			y = values[13],
+			y = rowTransform.m42,
 			// translateZ value of this seat´s row
-			z = values[14],
-		
+			z = rowTransform.m43,
+
 			// seat´s center point (x-axis)
 			seatCenterX = seat.offsetLeft + side_margin/2 + seat.offsetWidth/2,
 
@@ -327,10 +304,15 @@
 			ty = roomsize.y/2 - (roomsize.y - Math.abs(y)) + seat.offsetHeight + 10, // add a small extra
 			tz = Math.abs(z)+10, // add a small extra
 
-			// calculate how much to rotate in the x-axis (the more close to the screen the more we need to rotate)
+			// calculate how much to rotate in the x-axis (the more close to the screen the more we need to rotate):
+			// the camera looks up at the screen´s center
+			screenCenterY = monitor.offsetTop + monitor.offsetHeight/2,
+			rotX = Math.atan2(roomsize.y/2 - ty - screenCenterY, Math.sqrt(tx * tx + (roomsize.z - tz) * (roomsize.z - tz))) * 180 / Math.PI,
+
+			// translateZ values (absolute) of the first and the last row
 			firstRowZ = roomsize.z - row_front_gap,
 			lastRowZ = firstRowZ - (totalRows - 1 + row_gap_amount) * row_back,
-			
+
 			// calculate how much to rotate in the y-axis (the more close to the screen the more we need to rotate.
 			// Also the same applies when the distance from the center of the room to both sides increases.
 			// for the last row:
@@ -348,19 +330,38 @@
 			translateX : tx,
 			translateY : ty,
 			translateZ : tz,
-			rotateX : 0,//rotX,
+			rotateX : rotX,
 			rotateY : rotY
 		};
 
+		// reduced motion: crossfade to the seat´s view
+		if( reducedMotion.matches ) {
+			crossfadeRoom(function() { applyRoomTransform(); });
+			return;
+		}
+
+		var currentTransform = room.style.transform;
+		// change transition properties
+		applyRoomTransition();
 		// apply transform
 		applyRoomTransform();
-		
+
+		// the camera is already there (the same seat deselected and selected again), so no transition will end
+		if( room.style.transform === currentTransform ) {
+			removeRoomTransition();
+			return;
+		}
 		onEndTransition(room, function() {
 			removeRoomTransition();
 		});
 	}
 
 	function zoomOutScreen(callback) {
+		// reduced motion: crossfade to the room´s view
+		if( reducedMotion.matches ) {
+			crossfadeRoom(function() { applyRoomTransform(initTransform); }, callback);
+			return;
+		}
 		applyRoomTransition({'speed' : 1500, 'easing' : 'ease'});
 		applyRoomTransform(initTransform);
 		onEndTransition(room, function() {
@@ -369,26 +370,41 @@
 		});
 	}
 
+	// fades the room out, changes the view and fades the room back in (instead of moving the camera)
+	function crossfadeRoom(change, callback) {
+		container.classList.add('container--faded');
+		onEndTransition(container, function() {
+			change();
+			container.classList.remove('container--faded');
+			if( callback ) { callback.call(); }
+		});
+	}
+
 	function disableTilt() {
-		classie.add(tiltCtrl, 'action--disabled');
+		tiltCtrl.classList.add('action--disabled');
+		tiltCtrl.setAttribute('aria-pressed', 'false');
 		tilt = false;
 	}
 
 	function enableTilt() {
-		classie.remove(tiltCtrl, 'action--disabled');
+		tiltCtrl.classList.remove('action--disabled');
+		tiltCtrl.setAttribute('aria-pressed', 'true');
 		tilt = true;
 	}
 
 	function videoPlay() {
 		// hide the play control
-		classie.remove(playCtrl, 'action--shown');
+		playCtrl.classList.remove('action--shown');
+		playCtrl.inert = true;
 		video.currentTime = 0;
-		video.play();
+		// if the video can´t play, the play control shows again
+		video.play().catch(videoLoad);
 	}
 
 	function videoLoad() {
 		// show the play control
-		classie.add(playCtrl, 'action--shown');
+		playCtrl.classList.add('action--shown');
+		playCtrl.inert = false;
 		video.load();
 	}
 

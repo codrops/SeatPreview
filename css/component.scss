@@ -13,10 +13,15 @@ $cube_z: 3000px;
 
 .container {
 	position: relative;
-	-webkit-perspective: $pers;
 	perspective: $pers;
 	width: 100vw;
 	height: 100vh;
+	transition: opacity 0.3s;
+}
+
+/* reduced motion: instead of moving the camera, the room fades out and back in at the new view */
+.container--faded {
+	opacity: 0;
 }
 
 .cube {
@@ -26,7 +31,6 @@ $cube_z: 3000px;
 	margin: (-$cube_y * 0.5) 0 0 (-$cube_x * 0.5);
 	width: $cube_x;
 	height: $cube_y;
-	-webkit-transform-style: preserve-3d;
 	transform-style: preserve-3d;
 }
 
@@ -59,39 +63,31 @@ $cube_z: 3000px;
 .cube__side--back {
 	background: #232325;
 	box-shadow: 0 0 0 1px #232325;
-	-webkit-transform: translate3d(0, 0, -$cube_z);
 	transform: translate3d(0, 0, -$cube_z);
 }
 
 .cube__side--right {
 	right: 0;
-	-webkit-transform: rotate3d(0, 1, 0, -90deg);
 	transform: rotate3d(0, 1, 0, -90deg);
-	-webkit-transform-origin: 100% 50%;
 	transform-origin: 100% 50%;
 }
 
 .cube__side--left {
-	-webkit-transform: rotate3d(0, 1, 0, 90deg);
 	transform: rotate3d(0, 1, 0, 90deg);
-	-webkit-transform-origin: 0 50%;
 	transform-origin: 0 50%;
 }
 
 .cube__side--top {
 	background: #272729;
-	-webkit-transform: rotate3d(1, 0, 0, 90deg) translate3d(0, -$cube_z, 0);
 	transform: rotate3d(1, 0, 0, 90deg) translate3d(0, -$cube_z, 0);
-	-webkit-transform-origin: 50% 0%;
 	transform-origin: 50% 0%;
 }
 
 .rows--large {
 	height: 113px;
-	left: $side_margin / 2;
+	left: $side_margin * 0.5;
 	bottom: 0;
 	position: absolute;
-	-webkit-transform-style: preserve-3d;
 	transform-style: preserve-3d;
 	width: calc(100% - #{$side_margin}); /* leave a margin */
 }
@@ -102,7 +98,6 @@ $cube_z: 3000px;
 }
 
 .row {
-	display: -webkit-flex;
 	display: flex;
 	width: 100%;
 }
@@ -115,12 +110,10 @@ $cube_z: 3000px;
 	left: 0;
 	height: 100%;
 	position: absolute;
-	-webkit-transform-style: preserve-3d;
 	transform-style: preserve-3d;
 }
 
 .row__seat {
-	-webkit-flex: none;
 	flex: none;
 	height: 100%;
 	margin: 0;
@@ -130,13 +123,20 @@ $cube_z: 3000px;
 	width: 10px;
 	height: 10px;
 	background: rgba(72, 72, 78, 0.5);
+	border: 0;
+	padding: 0;
 	margin: 1px;
 	border-radius: 1px;
 	cursor: pointer;
+	&:focus-visible {
+		outline-offset: 1px;
+	}
 }
 
-.rows--mini .row__seat:hover {
-	background: #57e683;
+@media (hover: hover) {
+	.rows--mini .row__seat:hover {
+		background: #57e683;
+	}
 }
 
 .rows--mini .row__seat--reserved,
@@ -160,19 +160,17 @@ $cube_z: 3000px;
 
 /* Row positioning */
 
-@for $i from 0 to $rows / 2 {
+@for $i from 0 to $rows * 0.5 {
 	.rows--large .row:nth-child(#{$i + 1}) {
-		-webkit-transform: translate3d(0, -$row_up * $i, -$cube_z + $row_front_gap + $i * $row_back);
 		transform: translate3d(0, -$row_up * $i, -$cube_z + $row_front_gap + $i * $row_back);
 	}
 }
 
 /* Second back row set of seats (starting point needs to have the previous sums of the Y and Z translates) */
 
-@for $i from 0 to $rows / 2 {
+@for $i from 0 to $rows * 0.5 {
 	.rows--large .row:nth-child(#{$i + 10}) {
-		-webkit-transform: translate3d(0, -$row_up * ($i + $rows / 2 + $row_gap_amount), -$cube_z + $row_front_gap + $row_back * ($i + $rows / 2 + $row_gap_amount));
-		transform: translate3d(0, -$row_up * ($i + $rows / 2 + $row_gap_amount), -$cube_z + $row_front_gap + $row_back * ($i + $rows / 2 + $row_gap_amount));
+		transform: translate3d(0, -$row_up * ($i + $rows * 0.5 + $row_gap_amount), -$cube_z + $row_front_gap + $row_back * ($i + $rows * 0.5 + $row_gap_amount));
 	}
 }
 
@@ -182,17 +180,17 @@ $cube_z: 3000px;
 	padding: 10px 20px;
 	position: fixed;
 	z-index: 1000;
-	-webkit-transform: scale3d(1, 1, 1) translate3d(100%, 0, 0);
 	transform: scale3d(1, 1, 1) translate3d(100%, 0, 0);
 	/* scale avoids flickering */
-	-webkit-transition: -webkit-transform 0.6s;
 	transition: transform 0.6s;
+	/* off screen until shown, and out of the keyboard's reach too */
+	visibility: hidden;
 }
 
 .plan--shown {
-	-webkit-transform: scale3d(1, 1, 1);
 	transform: scale3d(1, 1, 1);
 	/* scale avoids flickering */
+	visibility: visible;
 }
 
 .plan__title {
@@ -249,13 +247,26 @@ $cube_z: 3000px;
 	left: 50%;
 }
 
-.tooltip:hover::before,
-.tooltip:hover::after {
+/* shown on hover (not on touch screens, where it would stay after a tap) and on keyboard focus */
+@media (hover: hover) {
+	.tooltip:hover::before,
+	.tooltip:hover::after {
+		opacity: 1;
+		transition: opacity 0.3s ease, transform 0.3s ease;
+		transition-delay: 0.1s;
+	}
+	.tooltip:hover::before {
+		transform: translate3d(0, 0, 0);
+	}
+	.tooltip:hover::after {
+		transform: translate3d(-50%, -10px, 0);
+	}
+}
+
+.tooltip:focus-visible::before,
+.tooltip:focus-visible::after {
 	opacity: 1;
-	-webkit-transition: opacity 0.3s ease, -webkit-transform 0.3s ease;
 	transition: opacity 0.3s ease, transform 0.3s ease;
-	-webkit-transition-delay: 0.1s;
-	transition-delay: 0.1s;
 }
 
 .tooltip::before {
@@ -270,12 +281,10 @@ $cube_z: 3000px;
 	border-top-color: #57e683;
 	border-width: 6px;
 	margin-left: -6px;
-	-webkit-transform: translate3d(0, 5px, 0);
 	transform: translate3d(0, 5px, 0);
 }
 
-.tooltip:hover::before {
-	-webkit-transform: translate3d(0, 0, 0);
+.tooltip:focus-visible::before {
 	transform: translate3d(0, 0, 0);
 }
 
@@ -290,12 +299,10 @@ $cube_z: 3000px;
 	padding: 8px 10px;
 	bottom: 100%;
 	box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
-	-webkit-transform: translate3d(-50%, -5px, 0);
 	transform: translate3d(-50%, -5px, 0);
 }
 
-.tooltip:hover::after {
-	-webkit-transform: translate3d(-50%, -10px, 0);
+.tooltip:focus-visible::after {
 	transform: translate3d(-50%, -10px, 0);
 }
 
@@ -328,36 +335,21 @@ $cube_z: 3000px;
 	border-radius: 7px;
 }
 
-.poster {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	background: url(../media/sintel.jpg) no-repeat center top;
-	top: 0;
-	background-size: cover;
-	z-index: 10;
-}
-
 .intro {
 	position: absolute;
 	width: 100%;
 	bottom: 0;
 	z-index: 20;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-align-items: center;
 	align-items: center;
 	min-height: 120px;
 	background: #000;
 	border-radius: 0 0 7px 7px;
-	-webkit-transform: translate3d(0, 100%, 0);
 	transform: translate3d(0, 100%, 0);
-	-webkit-transition: -webkit-transform 0.3s;
 	transition: transform 0.3s;
 }
 
 .intro--shown {
-	-webkit-transform: translate3d(0, 0, 0);
 	transform: translate3d(0, 0, 0);
 }
 
@@ -406,11 +398,6 @@ $cube_z: 3000px;
 	color: #fff;
 }
 
-.action:hover,
-.action:focus {
-	outline: none;
-}
-
 .action--seats {
 	padding: 0.5em 0 0.5em 2.5em;
 	margin: 0 0 0 1em;
@@ -431,11 +418,9 @@ $cube_z: 3000px;
 	height: 2.5em;
 	margin-top: -20px;
 	opacity: 0;
-	-webkit-transform: translate3d(-50%, -50%, 0);
 	transform: translate3d(-50%, -50%, 0);
 	background: url(../img/play.svg) no-repeat 0% 50%;
 	background-size: auto 100%;
-	-webkit-transition: opacity 0.3s;
 	transition: opacity 0.3s;
 }
 
@@ -449,19 +434,16 @@ $cube_z: 3000px;
 	height: 2em;
 	margin-top: -20px;
 	opacity: 0;
-	-webkit-transform: translate3d(-50%, -50%, 0) translate3d(0, 10px, 0);
 	transform: translate3d(-50%, -50%, 0) translate3d(0, 10px, 0);
 	background: url(../img/lookaround.svg) no-repeat 50% 50%;
 	background-size: auto 80%;
 	border-radius: 50%;
 	border: 4px solid transparent;
-	-webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
 	transition: opacity 0.3s, transform 0.3s;
 	&.action--disabled {
 		border-color: rgba(72, 72, 78, 0.5);
 	}
 	&.action--shown {
-		-webkit-transform: translate3d(-50%, -50%, 0);
 		transform: translate3d(-50%, -50%, 0);
 	}
 }
@@ -489,61 +471,53 @@ $cube_z: 3000px;
 	background: #21c252;
 }
 
-/* Fallback */
-.no-preserve3d {
-	.header {
-		display: block;
-		text-align: center;
-		position: relative;
-		padding: 2em;
-		background: transparent;
-	}
-	.header__title {
-		padding: 1em 0 0;
-		font-size: 2em;
-	}
-	.container {
-		display: none;
-	}
-	.plan {
-		-webkit-transform: translate3d(0, 0, 0);
-		transform: translate3d(0, 0, 0);
-		position: relative;
-		margin: 0 auto;
-	}
-}
-
 @media screen and (max-width: 50em), screen and (max-height: 38em) {
-	.header {
-		display: block;
-		text-align: center;
-		position: relative;
-		padding: 2em;
-		background: transparent;
+	/* the page scrolls here, so the plan is never cut off */
+	body {
+		height: auto;
+		overflow: auto;
 	}
-	.header__title {
-		padding: 1em 0 0;
-		font-size: 2em;
+	.frame {
+		position: relative;
+		height: auto;
+		grid-template-columns: 100%;
+		grid-template-areas:
+			'title'
+			'links'
+			'tags'
+			'sponsor';
+		justify-items: center;
+		text-align: center;
+	}
+	.frame__tags {
+		align-self: auto;
+	}
+	#cdawrap {
+		justify-self: center;
+		text-align: center;
 	}
 	.note--screen {
 		display: block;
 	}
+	/* hidden, but still laid out (main.js measures the seats); fixed, so it doesn't add to the page´s scroll height */
 	.container {
 		visibility: hidden;
 		pointer-events: none;
 		z-index: -1;
-		position: absolute;
+		position: fixed;
 	}
 	.plan {
-		-webkit-transform: translate3d(0, 0, 0);
 		transform: translate3d(0, 0, 0);
 		position: relative;
 		margin: 0 auto;
+		visibility: visible;
 	}
-	.rows--mini .row__seat:hover {
-		background: rgba(72, 72, 78, 0.5);
+	.rows--mini {
+		width: max-content;
 	}
-	.rows--mini .row__seat--selected:hover {
-		background: #21c252;
+	/* bigger seats for touch: as large as 18 seats and the aisle allow (16px at most) */
+	.rows--mini .row__seat {
+		width: min(16px, calc((100vw - 91px) / 18));
+		height: min(16px, calc((100vw - 91px) / 18));
 	}
 }

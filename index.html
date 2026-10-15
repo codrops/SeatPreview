@@ -2,39 +2,53 @@
 <html lang="en" class="no-js">
 	<head>
 		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>Perspective Seat Preview | Codrops</title>
 		<meta name="description" content="An experimental demo where a 3D perspective preview is shown for a selected seat in a cinema room." />
 		<meta name="keywords" content="cinema, seat booking, seating plan, perspective, 3d" />
 		<meta name="author" content="Codrops" />
-		<link rel="shortcut icon" href="favicon.ico">
-		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+		<!-- Social preview: absolute URLs -->
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="Codrops" />
+		<meta property="og:title" content="Perspective Seat Preview | Codrops" />
+		<meta property="og:description" content="An experimental demo where a 3D perspective preview is shown for a selected seat in a cinema room." />
+		<meta property="og:url" content="https://tympanus.net/Development/SeatPreview/" />
+		<meta property="og:image" content="https://tympanus.net/codrops/wp-content/uploads/2016/01/CinemaSeatPreviewExperiment.jpg" />
+		<meta property="og:image:width" content="580" />
+		<meta property="og:image:height" content="315" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@codrops" />
+		<meta name="twitter:title" content="Perspective Seat Preview | Codrops" />
+		<meta name="twitter:description" content="An experimental demo where a 3D perspective preview is shown for a selected seat in a cinema room." />
+		<meta name="twitter:image" content="https://tympanus.net/codrops/wp-content/uploads/2016/01/CinemaSeatPreviewExperiment.jpg" />
+		<link rel="icon" type="image/svg+xml" href="https://tympanus.net/favicon/favicon.svg" />
+		<link rel="shortcut icon" href="https://tympanus.net/favicon/favicon.ico" />
 		<link rel="stylesheet" type="text/css" href="css/demo.css" />
 		<link rel="stylesheet" type="text/css" href="css/component.css" />
-		<script src="js/modernizr-custom.js"></script>
+		<script>document.documentElement.className = 'js';</script>
 	</head>
-	<body>
-		<header class="header">
-			<div class="codrops-links">
-				<a class="codrops-icon codrops-icon--prev" href="http://tympanus.net/Development/LineMenuStyles/" title="Previous Demo"><span>Previous Demo</span></a>
-				<a class="codrops-icon codrops-icon--drop" href="http://tympanus.net/codrops/?p=25885" title="Back to the article"><span>Back to the Codrops article</span></a>
-			</div>
-			<h1 class="header__title">Cinema Seat Preview</h1>
-			<p class="note note--screen">Please view on a larger screen</p>
-			<p class="note note--support">Sorry, but your browser doesn't support preserve-3d!</p>
+	<body class="loading">
+		<header class="frame">
+			<h1 class="frame__title">Cinema Seat Preview</h1>
+			<nav class="frame__links">
+				<a href="https://tympanus.net/codrops/?p=25885">Article</a>
+				<a href="https://tympanus.net/codrops/hub/">All demos</a>
+				<a href="https://github.com/codrops/SeatPreview">GitHub</a>
+			</nav>
+			<nav class="frame__tags">
+				<a href="https://tympanus.net/codrops/hub/tag/3d/">#3d</a>
+				<a href="https://tympanus.net/codrops/hub/tag/cinema/">#cinema</a>
+				<a href="https://tympanus.net/codrops/hub/tag/room/">#room</a>
+			</nav>
 		</header>
+		<p class="note note--screen">Please view on a larger screen</p>
 		<div class="container">
 			<div class="cube">
 				<div class="cube__side cube__side--front"></div>
 				<div class="cube__side cube__side--back">
 					<div class="screen">
 						<div class="video">
-							<video class="video-player" src="media/sintel.mp4" preload="auto" poster="media/sintel.jpg">
-								<source src="media/sintel.ogg" type='video/ogg; codecs="theora, vorbis"'>
-								<source src="media/sintel.mp4" type='video/mp4; codecs="avc1.4D401E, mp4a.40.2"'>
-								<p>Sorry, but your browser does not support this video format.</p>
-							</video>
+							<video class="video-player" src="media/sintel.mp4" preload="metadata" poster="media/sintel.jpg"></video>
 							<button class="action action--play action--shown" aria-label="Play Video"></button>
 						</div>
 						<div class="intro intro--shown">
@@ -422,364 +436,364 @@
 			<h3 class="plan__title">Seating Plan</h3>
 			<div class="rows rows--mini">
 				<div class="row">
-					<div class="row__seat tooltip" data-tooltip="A1"></div>
-					<div class="row__seat tooltip" data-tooltip="A2"></div>
-					<div class="row__seat tooltip" data-tooltip="A3"></div>
-					<div class="row__seat tooltip" data-tooltip="A4"></div>
-					<div class="row__seat tooltip" data-tooltip="A5"></div>
-					<div class="row__seat tooltip" data-tooltip="A6"></div>
-					<div class="row__seat tooltip" data-tooltip="A7"></div>
-					<div class="row__seat tooltip" data-tooltip="A8"></div>
-					<div class="row__seat tooltip" data-tooltip="A9"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat tooltip" data-tooltip="A13"></div>
-					<div class="row__seat tooltip" data-tooltip="A14"></div>
-					<div class="row__seat tooltip" data-tooltip="A15"></div>
-					<div class="row__seat tooltip" data-tooltip="A16"></div>
-					<div class="row__seat tooltip" data-tooltip="A17"></div>
-					<div class="row__seat tooltip" data-tooltip="A18"></div>
+					<button class="row__seat tooltip" data-tooltip="A1" aria-label="Row A, seat 1" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="A2" aria-label="Row A, seat 2" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="A3" aria-label="Row A, seat 3" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="A4" aria-label="Row A, seat 4" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="A5" aria-label="Row A, seat 5" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="A6" aria-label="Row A, seat 6" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="A7" aria-label="Row A, seat 7" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="A8" aria-label="Row A, seat 8" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="A9" aria-label="Row A, seat 9" aria-pressed="false"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row A, seat 10, reserved" aria-disabled="true"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row A, seat 11, reserved" aria-disabled="true"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row A, seat 12, reserved" aria-disabled="true"></button>
+					<button class="row__seat tooltip" data-tooltip="A13" aria-label="Row A, seat 13" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="A14" aria-label="Row A, seat 14" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="A15" aria-label="Row A, seat 15" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="A16" aria-label="Row A, seat 16" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="A17" aria-label="Row A, seat 17" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="A18" aria-label="Row A, seat 18" aria-pressed="false"></button>
 				</div>
 				<div class="row">
-					<div class="row__seat tooltip" data-tooltip="B1"></div>
-					<div class="row__seat tooltip" data-tooltip="B2"></div>
-					<div class="row__seat tooltip" data-tooltip="B3"></div>
-					<div class="row__seat tooltip" data-tooltip="B4"></div>
-					<div class="row__seat tooltip" data-tooltip="B5"></div>
-					<div class="row__seat tooltip" data-tooltip="B6"></div>
-					<div class="row__seat tooltip" data-tooltip="B7"></div>
-					<div class="row__seat tooltip" data-tooltip="B8"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat tooltip" data-tooltip="B11"></div>
-					<div class="row__seat tooltip" data-tooltip="B12"></div>
-					<div class="row__seat tooltip" data-tooltip="B13"></div>
-					<div class="row__seat tooltip" data-tooltip="B14"></div>
-					<div class="row__seat tooltip" data-tooltip="B15"></div>
-					<div class="row__seat tooltip" data-tooltip="B16"></div>
-					<div class="row__seat tooltip" data-tooltip="B17"></div>
-					<div class="row__seat tooltip" data-tooltip="B18"></div>
+					<button class="row__seat tooltip" data-tooltip="B1" aria-label="Row B, seat 1" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="B2" aria-label="Row B, seat 2" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="B3" aria-label="Row B, seat 3" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="B4" aria-label="Row B, seat 4" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="B5" aria-label="Row B, seat 5" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="B6" aria-label="Row B, seat 6" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="B7" aria-label="Row B, seat 7" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="B8" aria-label="Row B, seat 8" aria-pressed="false"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row B, seat 9, reserved" aria-disabled="true"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row B, seat 10, reserved" aria-disabled="true"></button>
+					<button class="row__seat tooltip" data-tooltip="B11" aria-label="Row B, seat 11" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="B12" aria-label="Row B, seat 12" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="B13" aria-label="Row B, seat 13" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="B14" aria-label="Row B, seat 14" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="B15" aria-label="Row B, seat 15" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="B16" aria-label="Row B, seat 16" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="B17" aria-label="Row B, seat 17" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="B18" aria-label="Row B, seat 18" aria-pressed="false"></button>
 				</div>
 				<div class="row">
-					<div class="row__seat tooltip" data-tooltip="C1"></div>
-					<div class="row__seat tooltip" data-tooltip="C2"></div>
-					<div class="row__seat tooltip" data-tooltip="C3"></div>
-					<div class="row__seat tooltip" data-tooltip="C4"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat tooltip" data-tooltip="C8"></div>
-					<div class="row__seat tooltip" data-tooltip="C9"></div>
-					<div class="row__seat tooltip" data-tooltip="C10"></div>
-					<div class="row__seat tooltip" data-tooltip="C11"></div>
-					<div class="row__seat tooltip" data-tooltip="C12"></div>
-					<div class="row__seat tooltip" data-tooltip="C13"></div>
-					<div class="row__seat tooltip" data-tooltip="C14"></div>
-					<div class="row__seat tooltip" data-tooltip="C15"></div>
-					<div class="row__seat tooltip" data-tooltip="C16"></div>
-					<div class="row__seat tooltip" data-tooltip="C17"></div>
-					<div class="row__seat tooltip" data-tooltip="C18"></div>
+					<button class="row__seat tooltip" data-tooltip="C1" aria-label="Row C, seat 1" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="C2" aria-label="Row C, seat 2" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="C3" aria-label="Row C, seat 3" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="C4" aria-label="Row C, seat 4" aria-pressed="false"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row C, seat 5, reserved" aria-disabled="true"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row C, seat 6, reserved" aria-disabled="true"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row C, seat 7, reserved" aria-disabled="true"></button>
+					<button class="row__seat tooltip" data-tooltip="C8" aria-label="Row C, seat 8" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="C9" aria-label="Row C, seat 9" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="C10" aria-label="Row C, seat 10" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="C11" aria-label="Row C, seat 11" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="C12" aria-label="Row C, seat 12" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="C13" aria-label="Row C, seat 13" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="C14" aria-label="Row C, seat 14" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="C15" aria-label="Row C, seat 15" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="C16" aria-label="Row C, seat 16" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="C17" aria-label="Row C, seat 17" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="C18" aria-label="Row C, seat 18" aria-pressed="false"></button>
 				</div>
 				<div class="row">
-					<div class="row__seat tooltip" data-tooltip="D1"></div>
-					<div class="row__seat tooltip" data-tooltip="D2"></div>
-					<div class="row__seat tooltip" data-tooltip="D3"></div>
-					<div class="row__seat tooltip" data-tooltip="D4"></div>
-					<div class="row__seat tooltip" data-tooltip="D5"></div>
-					<div class="row__seat tooltip" data-tooltip="D6"></div>
-					<div class="row__seat tooltip" data-tooltip="D7"></div>
-					<div class="row__seat tooltip" data-tooltip="D8"></div>
-					<div class="row__seat tooltip" data-tooltip="D9"></div>
-					<div class="row__seat tooltip" data-tooltip="D10"></div>
-					<div class="row__seat tooltip" data-tooltip="D11"></div>
-					<div class="row__seat tooltip" data-tooltip="D12"></div>
-					<div class="row__seat tooltip" data-tooltip="D13"></div>
-					<div class="row__seat tooltip" data-tooltip="D14"></div>
-					<div class="row__seat tooltip" data-tooltip="D15"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat row__seat--reserved"></div>
+					<button class="row__seat tooltip" data-tooltip="D1" aria-label="Row D, seat 1" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="D2" aria-label="Row D, seat 2" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="D3" aria-label="Row D, seat 3" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="D4" aria-label="Row D, seat 4" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="D5" aria-label="Row D, seat 5" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="D6" aria-label="Row D, seat 6" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="D7" aria-label="Row D, seat 7" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="D8" aria-label="Row D, seat 8" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="D9" aria-label="Row D, seat 9" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="D10" aria-label="Row D, seat 10" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="D11" aria-label="Row D, seat 11" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="D12" aria-label="Row D, seat 12" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="D13" aria-label="Row D, seat 13" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="D14" aria-label="Row D, seat 14" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="D15" aria-label="Row D, seat 15" aria-pressed="false"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row D, seat 16, reserved" aria-disabled="true"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row D, seat 17, reserved" aria-disabled="true"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row D, seat 18, reserved" aria-disabled="true"></button>
 				</div>
 				<div class="row">
-					<div class="row__seat tooltip" data-tooltip="E1"></div>
-					<div class="row__seat tooltip" data-tooltip="E2"></div>
-					<div class="row__seat tooltip" data-tooltip="E3"></div>
-					<div class="row__seat tooltip" data-tooltip="E4"></div>
-					<div class="row__seat tooltip" data-tooltip="E5"></div>
-					<div class="row__seat tooltip" data-tooltip="E6"></div>
-					<div class="row__seat tooltip" data-tooltip="E7"></div>
-					<div class="row__seat tooltip" data-tooltip="E8"></div>
-					<div class="row__seat tooltip" data-tooltip="E9"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat tooltip" data-tooltip="E12"></div>
-					<div class="row__seat tooltip" data-tooltip="E13"></div>
-					<div class="row__seat tooltip" data-tooltip="E14"></div>
-					<div class="row__seat tooltip" data-tooltip="E15"></div>
-					<div class="row__seat tooltip" data-tooltip="E16"></div>
-					<div class="row__seat tooltip" data-tooltip="E17"></div>
-					<div class="row__seat tooltip" data-tooltip="E18"></div>
+					<button class="row__seat tooltip" data-tooltip="E1" aria-label="Row E, seat 1" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="E2" aria-label="Row E, seat 2" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="E3" aria-label="Row E, seat 3" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="E4" aria-label="Row E, seat 4" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="E5" aria-label="Row E, seat 5" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="E6" aria-label="Row E, seat 6" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="E7" aria-label="Row E, seat 7" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="E8" aria-label="Row E, seat 8" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="E9" aria-label="Row E, seat 9" aria-pressed="false"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row E, seat 10, reserved" aria-disabled="true"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row E, seat 11, reserved" aria-disabled="true"></button>
+					<button class="row__seat tooltip" data-tooltip="E12" aria-label="Row E, seat 12" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="E13" aria-label="Row E, seat 13" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="E14" aria-label="Row E, seat 14" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="E15" aria-label="Row E, seat 15" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="E16" aria-label="Row E, seat 16" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="E17" aria-label="Row E, seat 17" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="E18" aria-label="Row E, seat 18" aria-pressed="false"></button>
 				</div>
 				<div class="row">
-					<div class="row__seat tooltip" data-tooltip="F1"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat tooltip" data-tooltip="F3"></div>
-					<div class="row__seat tooltip" data-tooltip="F4"></div>
-					<div class="row__seat tooltip" data-tooltip="F5"></div>
-					<div class="row__seat tooltip" data-tooltip="F6"></div>
-					<div class="row__seat tooltip" data-tooltip="F7"></div>
-					<div class="row__seat tooltip" data-tooltip="F8"></div>
-					<div class="row__seat tooltip" data-tooltip="F9"></div>
-					<div class="row__seat tooltip" data-tooltip="F10"></div>
-					<div class="row__seat tooltip" data-tooltip="F11"></div>
-					<div class="row__seat tooltip" data-tooltip="F12"></div>
-					<div class="row__seat tooltip" data-tooltip="F13"></div>
-					<div class="row__seat tooltip" data-tooltip="F14"></div>
-					<div class="row__seat tooltip" data-tooltip="F15"></div>
-					<div class="row__seat tooltip" data-tooltip="F16"></div>
-					<div class="row__seat tooltip" data-tooltip="F17"></div>
-					<div class="row__seat tooltip" data-tooltip="F18"></div>
+					<button class="row__seat tooltip" data-tooltip="F1" aria-label="Row F, seat 1" aria-pressed="false"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row F, seat 2, reserved" aria-disabled="true"></button>
+					<button class="row__seat tooltip" data-tooltip="F3" aria-label="Row F, seat 3" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="F4" aria-label="Row F, seat 4" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="F5" aria-label="Row F, seat 5" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="F6" aria-label="Row F, seat 6" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="F7" aria-label="Row F, seat 7" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="F8" aria-label="Row F, seat 8" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="F9" aria-label="Row F, seat 9" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="F10" aria-label="Row F, seat 10" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="F11" aria-label="Row F, seat 11" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="F12" aria-label="Row F, seat 12" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="F13" aria-label="Row F, seat 13" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="F14" aria-label="Row F, seat 14" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="F15" aria-label="Row F, seat 15" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="F16" aria-label="Row F, seat 16" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="F17" aria-label="Row F, seat 17" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="F18" aria-label="Row F, seat 18" aria-pressed="false"></button>
 				</div>
 				<div class="row">
-					<div class="row__seat tooltip" data-tooltip="G1"></div>
-					<div class="row__seat tooltip" data-tooltip="G2"></div>
-					<div class="row__seat tooltip" data-tooltip="G3"></div>
-					<div class="row__seat tooltip" data-tooltip="G4"></div>
-					<div class="row__seat tooltip" data-tooltip="G5"></div>
-					<div class="row__seat tooltip" data-tooltip="G6"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat tooltip" data-tooltip="G9"></div>
-					<div class="row__seat tooltip" data-tooltip="G10"></div>
-					<div class="row__seat tooltip" data-tooltip="G11"></div>
-					<div class="row__seat tooltip" data-tooltip="G12"></div>
-					<div class="row__seat tooltip" data-tooltip="G13"></div>
-					<div class="row__seat tooltip" data-tooltip="G14"></div>
-					<div class="row__seat tooltip" data-tooltip="G15"></div>
-					<div class="row__seat tooltip" data-tooltip="G16"></div>
-					<div class="row__seat tooltip" data-tooltip="G17"></div>
-					<div class="row__seat tooltip" data-tooltip="G18"></div>
+					<button class="row__seat tooltip" data-tooltip="G1" aria-label="Row G, seat 1" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="G2" aria-label="Row G, seat 2" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="G3" aria-label="Row G, seat 3" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="G4" aria-label="Row G, seat 4" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="G5" aria-label="Row G, seat 5" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="G6" aria-label="Row G, seat 6" aria-pressed="false"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row G, seat 7, reserved" aria-disabled="true"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row G, seat 8, reserved" aria-disabled="true"></button>
+					<button class="row__seat tooltip" data-tooltip="G9" aria-label="Row G, seat 9" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="G10" aria-label="Row G, seat 10" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="G11" aria-label="Row G, seat 11" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="G12" aria-label="Row G, seat 12" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="G13" aria-label="Row G, seat 13" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="G14" aria-label="Row G, seat 14" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="G15" aria-label="Row G, seat 15" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="G16" aria-label="Row G, seat 16" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="G17" aria-label="Row G, seat 17" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="G18" aria-label="Row G, seat 18" aria-pressed="false"></button>
 				</div>
 				<div class="row">
-					<div class="row__seat tooltip" data-tooltip="H1"></div>
-					<div class="row__seat tooltip" data-tooltip="H2"></div>
-					<div class="row__seat tooltip" data-tooltip="H3"></div>
-					<div class="row__seat tooltip" data-tooltip="H4"></div>
-					<div class="row__seat tooltip" data-tooltip="H5"></div>
-					<div class="row__seat tooltip" data-tooltip="H6"></div>
-					<div class="row__seat tooltip" data-tooltip="H7"></div>
-					<div class="row__seat tooltip" data-tooltip="H8"></div>
-					<div class="row__seat tooltip" data-tooltip="H9"></div>
-					<div class="row__seat tooltip" data-tooltip="H10"></div>
-					<div class="row__seat tooltip" data-tooltip="H11"></div>
-					<div class="row__seat tooltip" data-tooltip="H12"></div>
-					<div class="row__seat tooltip" data-tooltip="H13"></div>
-					<div class="row__seat tooltip" data-tooltip="H14"></div>
-					<div class="row__seat tooltip" data-tooltip="H15"></div>
-					<div class="row__seat tooltip" data-tooltip="H16"></div>
-					<div class="row__seat tooltip" data-tooltip="H17"></div>
-					<div class="row__seat tooltip" data-tooltip="H18"></div>
+					<button class="row__seat tooltip" data-tooltip="H1" aria-label="Row H, seat 1" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="H2" aria-label="Row H, seat 2" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="H3" aria-label="Row H, seat 3" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="H4" aria-label="Row H, seat 4" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="H5" aria-label="Row H, seat 5" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="H6" aria-label="Row H, seat 6" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="H7" aria-label="Row H, seat 7" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="H8" aria-label="Row H, seat 8" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="H9" aria-label="Row H, seat 9" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="H10" aria-label="Row H, seat 10" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="H11" aria-label="Row H, seat 11" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="H12" aria-label="Row H, seat 12" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="H13" aria-label="Row H, seat 13" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="H14" aria-label="Row H, seat 14" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="H15" aria-label="Row H, seat 15" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="H16" aria-label="Row H, seat 16" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="H17" aria-label="Row H, seat 17" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="H18" aria-label="Row H, seat 18" aria-pressed="false"></button>
 				</div>
 				<div class="row">
-					<div class="row__seat tooltip" data-tooltip="I1"></div>
-					<div class="row__seat tooltip" data-tooltip="I2"></div>
-					<div class="row__seat tooltip" data-tooltip="I3"></div>
-					<div class="row__seat tooltip" data-tooltip="I4"></div>
-					<div class="row__seat tooltip" data-tooltip="I5"></div>
-					<div class="row__seat tooltip" data-tooltip="I6"></div>
-					<div class="row__seat tooltip" data-tooltip="I7"></div>
-					<div class="row__seat tooltip" data-tooltip="I8"></div>
-					<div class="row__seat tooltip" data-tooltip="I9"></div>
-					<div class="row__seat tooltip" data-tooltip="I10"></div>
-					<div class="row__seat tooltip" data-tooltip="I11"></div>
-					<div class="row__seat tooltip" data-tooltip="I12"></div>
-					<div class="row__seat tooltip" data-tooltip="I13"></div>
-					<div class="row__seat tooltip" data-tooltip="I14"></div>
-					<div class="row__seat tooltip" data-tooltip="I15"></div>
-					<div class="row__seat tooltip" data-tooltip="I16"></div>
-					<div class="row__seat tooltip" data-tooltip="I17"></div>
-					<div class="row__seat tooltip" data-tooltip="I18"></div>
+					<button class="row__seat tooltip" data-tooltip="I1" aria-label="Row I, seat 1" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="I2" aria-label="Row I, seat 2" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="I3" aria-label="Row I, seat 3" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="I4" aria-label="Row I, seat 4" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="I5" aria-label="Row I, seat 5" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="I6" aria-label="Row I, seat 6" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="I7" aria-label="Row I, seat 7" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="I8" aria-label="Row I, seat 8" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="I9" aria-label="Row I, seat 9" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="I10" aria-label="Row I, seat 10" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="I11" aria-label="Row I, seat 11" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="I12" aria-label="Row I, seat 12" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="I13" aria-label="Row I, seat 13" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="I14" aria-label="Row I, seat 14" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="I15" aria-label="Row I, seat 15" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="I16" aria-label="Row I, seat 16" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="I17" aria-label="Row I, seat 17" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="I18" aria-label="Row I, seat 18" aria-pressed="false"></button>
 				</div>
 				<div class="row">
-					<div class="row__seat tooltip" data-tooltip="J1"></div>
-					<div class="row__seat tooltip" data-tooltip="J2"></div>
-					<div class="row__seat tooltip" data-tooltip="J3"></div>
-					<div class="row__seat tooltip" data-tooltip="J4"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat tooltip" data-tooltip="J8"></div>
-					<div class="row__seat tooltip" data-tooltip="J9"></div>
-					<div class="row__seat tooltip" data-tooltip="J10"></div>
-					<div class="row__seat tooltip" data-tooltip="J11"></div>
-					<div class="row__seat tooltip" data-tooltip="J12"></div>
-					<div class="row__seat tooltip" data-tooltip="J13"></div>
-					<div class="row__seat tooltip" data-tooltip="J14"></div>
-					<div class="row__seat tooltip" data-tooltip="J15"></div>
-					<div class="row__seat tooltip" data-tooltip="J16"></div>
-					<div class="row__seat tooltip" data-tooltip="J17"></div>
-					<div class="row__seat tooltip" data-tooltip="J18"></div>
+					<button class="row__seat tooltip" data-tooltip="J1" aria-label="Row J, seat 1" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="J2" aria-label="Row J, seat 2" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="J3" aria-label="Row J, seat 3" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="J4" aria-label="Row J, seat 4" aria-pressed="false"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row J, seat 5, reserved" aria-disabled="true"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row J, seat 6, reserved" aria-disabled="true"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row J, seat 7, reserved" aria-disabled="true"></button>
+					<button class="row__seat tooltip" data-tooltip="J8" aria-label="Row J, seat 8" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="J9" aria-label="Row J, seat 9" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="J10" aria-label="Row J, seat 10" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="J11" aria-label="Row J, seat 11" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="J12" aria-label="Row J, seat 12" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="J13" aria-label="Row J, seat 13" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="J14" aria-label="Row J, seat 14" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="J15" aria-label="Row J, seat 15" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="J16" aria-label="Row J, seat 16" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="J17" aria-label="Row J, seat 17" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="J18" aria-label="Row J, seat 18" aria-pressed="false"></button>
 				</div>
 				<div class="row">
-					<div class="row__seat tooltip" data-tooltip="K1"></div>
-					<div class="row__seat tooltip" data-tooltip="K2"></div>
-					<div class="row__seat tooltip" data-tooltip="K3"></div>
-					<div class="row__seat tooltip" data-tooltip="K4"></div>
-					<div class="row__seat tooltip" data-tooltip="K5"></div>
-					<div class="row__seat tooltip" data-tooltip="K6"></div>
-					<div class="row__seat tooltip" data-tooltip="K7"></div>
-					<div class="row__seat tooltip" data-tooltip="K8"></div>
-					<div class="row__seat tooltip" data-tooltip="K9"></div>
-					<div class="row__seat tooltip" data-tooltip="K10"></div>
-					<div class="row__seat tooltip" data-tooltip="K11"></div>
-					<div class="row__seat tooltip" data-tooltip="K12"></div>
-					<div class="row__seat tooltip" data-tooltip="K13"></div>
-					<div class="row__seat tooltip" data-tooltip="K14"></div>
-					<div class="row__seat tooltip" data-tooltip="K15"></div>
-					<div class="row__seat tooltip" data-tooltip="K16"></div>
-					<div class="row__seat tooltip" data-tooltip="K17"></div>
-					<div class="row__seat tooltip" data-tooltip="K18"></div>
+					<button class="row__seat tooltip" data-tooltip="K1" aria-label="Row K, seat 1" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="K2" aria-label="Row K, seat 2" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="K3" aria-label="Row K, seat 3" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="K4" aria-label="Row K, seat 4" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="K5" aria-label="Row K, seat 5" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="K6" aria-label="Row K, seat 6" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="K7" aria-label="Row K, seat 7" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="K8" aria-label="Row K, seat 8" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="K9" aria-label="Row K, seat 9" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="K10" aria-label="Row K, seat 10" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="K11" aria-label="Row K, seat 11" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="K12" aria-label="Row K, seat 12" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="K13" aria-label="Row K, seat 13" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="K14" aria-label="Row K, seat 14" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="K15" aria-label="Row K, seat 15" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="K16" aria-label="Row K, seat 16" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="K17" aria-label="Row K, seat 17" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="K18" aria-label="Row K, seat 18" aria-pressed="false"></button>
 				</div>
 				<div class="row">
-					<div class="row__seat tooltip" data-tooltip="L1"></div>
-					<div class="row__seat tooltip" data-tooltip="L2"></div>
-					<div class="row__seat tooltip" data-tooltip="L3"></div>
-					<div class="row__seat tooltip" data-tooltip="L4"></div>
-					<div class="row__seat tooltip" data-tooltip="L5"></div>
-					<div class="row__seat tooltip" data-tooltip="L6"></div>
-					<div class="row__seat tooltip" data-tooltip="L7"></div>
-					<div class="row__seat tooltip" data-tooltip="L8"></div>
-					<div class="row__seat tooltip" data-tooltip="L9"></div>
-					<div class="row__seat tooltip" data-tooltip="L10"></div>
-					<div class="row__seat tooltip" data-tooltip="L11"></div>
-					<div class="row__seat tooltip" data-tooltip="L12"></div>
-					<div class="row__seat tooltip" data-tooltip="L13"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat tooltip" data-tooltip="L17"></div>
-					<div class="row__seat tooltip" data-tooltip="L18"></div>
+					<button class="row__seat tooltip" data-tooltip="L1" aria-label="Row L, seat 1" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="L2" aria-label="Row L, seat 2" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="L3" aria-label="Row L, seat 3" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="L4" aria-label="Row L, seat 4" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="L5" aria-label="Row L, seat 5" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="L6" aria-label="Row L, seat 6" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="L7" aria-label="Row L, seat 7" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="L8" aria-label="Row L, seat 8" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="L9" aria-label="Row L, seat 9" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="L10" aria-label="Row L, seat 10" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="L11" aria-label="Row L, seat 11" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="L12" aria-label="Row L, seat 12" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="L13" aria-label="Row L, seat 13" aria-pressed="false"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row L, seat 14, reserved" aria-disabled="true"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row L, seat 15, reserved" aria-disabled="true"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row L, seat 16, reserved" aria-disabled="true"></button>
+					<button class="row__seat tooltip" data-tooltip="L17" aria-label="Row L, seat 17" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="L18" aria-label="Row L, seat 18" aria-pressed="false"></button>
 				</div>
 				<div class="row">
-					<div class="row__seat tooltip" data-tooltip="M1"></div>
-					<div class="row__seat tooltip" data-tooltip="M2"></div>
-					<div class="row__seat tooltip" data-tooltip="M3"></div>
-					<div class="row__seat tooltip" data-tooltip="M4"></div>
-					<div class="row__seat tooltip" data-tooltip="M5"></div>
-					<div class="row__seat tooltip" data-tooltip="M6"></div>
-					<div class="row__seat tooltip" data-tooltip="M7"></div>
-					<div class="row__seat tooltip" data-tooltip="M8"></div>
-					<div class="row__seat tooltip" data-tooltip="M9"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat tooltip" data-tooltip="M14"></div>
-					<div class="row__seat tooltip" data-tooltip="M15"></div>
-					<div class="row__seat tooltip" data-tooltip="M16"></div>
-					<div class="row__seat tooltip" data-tooltip="M17"></div>
-					<div class="row__seat tooltip" data-tooltip="M18"></div>
+					<button class="row__seat tooltip" data-tooltip="M1" aria-label="Row M, seat 1" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="M2" aria-label="Row M, seat 2" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="M3" aria-label="Row M, seat 3" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="M4" aria-label="Row M, seat 4" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="M5" aria-label="Row M, seat 5" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="M6" aria-label="Row M, seat 6" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="M7" aria-label="Row M, seat 7" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="M8" aria-label="Row M, seat 8" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="M9" aria-label="Row M, seat 9" aria-pressed="false"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row M, seat 10, reserved" aria-disabled="true"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row M, seat 11, reserved" aria-disabled="true"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row M, seat 12, reserved" aria-disabled="true"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row M, seat 13, reserved" aria-disabled="true"></button>
+					<button class="row__seat tooltip" data-tooltip="M14" aria-label="Row M, seat 14" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="M15" aria-label="Row M, seat 15" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="M16" aria-label="Row M, seat 16" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="M17" aria-label="Row M, seat 17" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="M18" aria-label="Row M, seat 18" aria-pressed="false"></button>
 				</div>
 				<div class="row">
-					<div class="row__seat tooltip" data-tooltip="N1"></div>
-					<div class="row__seat tooltip" data-tooltip="N2"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat tooltip" data-tooltip="N5"></div>
-					<div class="row__seat tooltip" data-tooltip="N6"></div>
-					<div class="row__seat tooltip" data-tooltip="N7"></div>
-					<div class="row__seat tooltip" data-tooltip="N8"></div>
-					<div class="row__seat tooltip" data-tooltip="N9"></div>
-					<div class="row__seat tooltip" data-tooltip="N10"></div>
-					<div class="row__seat tooltip" data-tooltip="N11"></div>
-					<div class="row__seat tooltip" data-tooltip="N12"></div>
-					<div class="row__seat tooltip" data-tooltip="N13"></div>
-					<div class="row__seat tooltip" data-tooltip="N14"></div>
-					<div class="row__seat tooltip" data-tooltip="N15"></div>
-					<div class="row__seat tooltip" data-tooltip="N16"></div>
-					<div class="row__seat tooltip" data-tooltip="N17"></div>
-					<div class="row__seat tooltip" data-tooltip="N18"></div>
+					<button class="row__seat tooltip" data-tooltip="N1" aria-label="Row N, seat 1" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="N2" aria-label="Row N, seat 2" aria-pressed="false"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row N, seat 3, reserved" aria-disabled="true"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row N, seat 4, reserved" aria-disabled="true"></button>
+					<button class="row__seat tooltip" data-tooltip="N5" aria-label="Row N, seat 5" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="N6" aria-label="Row N, seat 6" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="N7" aria-label="Row N, seat 7" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="N8" aria-label="Row N, seat 8" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="N9" aria-label="Row N, seat 9" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="N10" aria-label="Row N, seat 10" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="N11" aria-label="Row N, seat 11" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="N12" aria-label="Row N, seat 12" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="N13" aria-label="Row N, seat 13" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="N14" aria-label="Row N, seat 14" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="N15" aria-label="Row N, seat 15" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="N16" aria-label="Row N, seat 16" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="N17" aria-label="Row N, seat 17" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="N18" aria-label="Row N, seat 18" aria-pressed="false"></button>
 				</div>
 				<div class="row">
-					<div class="row__seat tooltip" data-tooltip="O1"></div>
-					<div class="row__seat tooltip" data-tooltip="O2"></div>
-					<div class="row__seat tooltip" data-tooltip="O3"></div>
-					<div class="row__seat tooltip" data-tooltip="O4"></div>
-					<div class="row__seat tooltip" data-tooltip="O5"></div>
-					<div class="row__seat tooltip" data-tooltip="O6"></div>
-					<div class="row__seat tooltip" data-tooltip="O7"></div>
-					<div class="row__seat tooltip" data-tooltip="O8"></div>
-					<div class="row__seat tooltip" data-tooltip="O9"></div>
-					<div class="row__seat tooltip" data-tooltip="O10"></div>
-					<div class="row__seat tooltip" data-tooltip="O11"></div>
-					<div class="row__seat tooltip" data-tooltip="O12"></div>
-					<div class="row__seat tooltip" data-tooltip="O13"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat row__seat--reserved"></div>
-					<div class="row__seat tooltip" data-tooltip="O16"></div>
-					<div class="row__seat tooltip" data-tooltip="O17"></div>
-					<div class="row__seat tooltip" data-tooltip="O18"></div>
+					<button class="row__seat tooltip" data-tooltip="O1" aria-label="Row O, seat 1" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="O2" aria-label="Row O, seat 2" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="O3" aria-label="Row O, seat 3" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="O4" aria-label="Row O, seat 4" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="O5" aria-label="Row O, seat 5" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="O6" aria-label="Row O, seat 6" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="O7" aria-label="Row O, seat 7" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="O8" aria-label="Row O, seat 8" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="O9" aria-label="Row O, seat 9" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="O10" aria-label="Row O, seat 10" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="O11" aria-label="Row O, seat 11" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="O12" aria-label="Row O, seat 12" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="O13" aria-label="Row O, seat 13" aria-pressed="false"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row O, seat 14, reserved" aria-disabled="true"></button>
+					<button class="row__seat row__seat--reserved" aria-label="Row O, seat 15, reserved" aria-disabled="true"></button>
+					<button class="row__seat tooltip" data-tooltip="O16" aria-label="Row O, seat 16" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="O17" aria-label="Row O, seat 17" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="O18" aria-label="Row O, seat 18" aria-pressed="false"></button>
 				</div>
 				<div class="row">
-					<div class="row__seat tooltip" data-tooltip="P1"></div>
-					<div class="row__seat tooltip" data-tooltip="P2"></div>
-					<div class="row__seat tooltip" data-tooltip="P3"></div>
-					<div class="row__seat tooltip" data-tooltip="P4"></div>
-					<div class="row__seat tooltip" data-tooltip="P5"></div>
-					<div class="row__seat tooltip" data-tooltip="P6"></div>
-					<div class="row__seat tooltip" data-tooltip="P7"></div>
-					<div class="row__seat tooltip" data-tooltip="P8"></div>
-					<div class="row__seat tooltip" data-tooltip="P9"></div>
-					<div class="row__seat tooltip" data-tooltip="P10"></div>
-					<div class="row__seat tooltip" data-tooltip="P11"></div>
-					<div class="row__seat tooltip" data-tooltip="P12"></div>
-					<div class="row__seat tooltip" data-tooltip="P13"></div>
-					<div class="row__seat tooltip" data-tooltip="P14"></div>
-					<div class="row__seat tooltip" data-tooltip="P15"></div>
-					<div class="row__seat tooltip" data-tooltip="P16"></div>
-					<div class="row__seat tooltip" data-tooltip="P17"></div>
-					<div class="row__seat tooltip" data-tooltip="P18"></div>
+					<button class="row__seat tooltip" data-tooltip="P1" aria-label="Row P, seat 1" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="P2" aria-label="Row P, seat 2" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="P3" aria-label="Row P, seat 3" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="P4" aria-label="Row P, seat 4" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="P5" aria-label="Row P, seat 5" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="P6" aria-label="Row P, seat 6" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="P7" aria-label="Row P, seat 7" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="P8" aria-label="Row P, seat 8" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="P9" aria-label="Row P, seat 9" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="P10" aria-label="Row P, seat 10" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="P11" aria-label="Row P, seat 11" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="P12" aria-label="Row P, seat 12" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="P13" aria-label="Row P, seat 13" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="P14" aria-label="Row P, seat 14" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="P15" aria-label="Row P, seat 15" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="P16" aria-label="Row P, seat 16" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="P17" aria-label="Row P, seat 17" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="P18" aria-label="Row P, seat 18" aria-pressed="false"></button>
 				</div>
 				<div class="row">
-					<div class="row__seat tooltip" data-tooltip="Q1"></div>
-					<div class="row__seat tooltip" data-tooltip="Q2"></div>
-					<div class="row__seat tooltip" data-tooltip="Q3"></div>
-					<div class="row__seat tooltip" data-tooltip="Q4"></div>
-					<div class="row__seat tooltip" data-tooltip="Q5"></div>
-					<div class="row__seat tooltip" data-tooltip="Q6"></div>
-					<div class="row__seat tooltip" data-tooltip="Q7"></div>
-					<div class="row__seat tooltip" data-tooltip="Q8"></div>
-					<div class="row__seat tooltip" data-tooltip="Q9"></div>
-					<div class="row__seat tooltip" data-tooltip="Q10"></div>
-					<div class="row__seat tooltip" data-tooltip="Q11"></div>
-					<div class="row__seat tooltip" data-tooltip="Q12"></div>
-					<div class="row__seat tooltip" data-tooltip="Q13"></div>
-					<div class="row__seat tooltip" data-tooltip="Q14"></div>
-					<div class="row__seat tooltip" data-tooltip="Q15"></div>
-					<div class="row__seat tooltip" data-tooltip="Q16"></div>
-					<div class="row__seat tooltip" data-tooltip="Q17"></div>
-					<div class="row__seat tooltip" data-tooltip="Q18"></div>
+					<button class="row__seat tooltip" data-tooltip="Q1" aria-label="Row Q, seat 1" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="Q2" aria-label="Row Q, seat 2" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="Q3" aria-label="Row Q, seat 3" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="Q4" aria-label="Row Q, seat 4" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="Q5" aria-label="Row Q, seat 5" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="Q6" aria-label="Row Q, seat 6" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="Q7" aria-label="Row Q, seat 7" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="Q8" aria-label="Row Q, seat 8" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="Q9" aria-label="Row Q, seat 9" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="Q10" aria-label="Row Q, seat 10" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="Q11" aria-label="Row Q, seat 11" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="Q12" aria-label="Row Q, seat 12" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="Q13" aria-label="Row Q, seat 13" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="Q14" aria-label="Row Q, seat 14" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="Q15" aria-label="Row Q, seat 15" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="Q16" aria-label="Row Q, seat 16" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="Q17" aria-label="Row Q, seat 17" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="Q18" aria-label="Row Q, seat 18" aria-pressed="false"></button>
 				</div>
 				<div class="row">
-					<div class="row__seat tooltip" data-tooltip="R1"></div>
-					<div class="row__seat tooltip" data-tooltip="R2"></div>
-					<div class="row__seat tooltip" data-tooltip="R3"></div>
-					<div class="row__seat tooltip" data-tooltip="R4"></div>
-					<div class="row__seat tooltip" data-tooltip="R5"></div>
-					<div class="row__seat tooltip" data-tooltip="R6"></div>
-					<div class="row__seat tooltip" data-tooltip="R7"></div>
-					<div class="row__seat tooltip" data-tooltip="R8"></div>
-					<div class="row__seat tooltip" data-tooltip="R9"></div>
-					<div class="row__seat tooltip" data-tooltip="R10"></div>
-					<div class="row__seat tooltip" data-tooltip="R11"></div>
-					<div class="row__seat tooltip" data-tooltip="R12"></div>
-					<div class="row__seat tooltip" data-tooltip="R13"></div>
-					<div class="row__seat tooltip" data-tooltip="R14"></div>
-					<div class="row__seat tooltip" data-tooltip="R15"></div>
-					<div class="row__seat tooltip" data-tooltip="R16"></div>
-					<div class="row__seat tooltip" data-tooltip="R17"></div>
-					<div class="row__seat tooltip" data-tooltip="R18"></div>
+					<button class="row__seat tooltip" data-tooltip="R1" aria-label="Row R, seat 1" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="R2" aria-label="Row R, seat 2" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="R3" aria-label="Row R, seat 3" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="R4" aria-label="Row R, seat 4" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="R5" aria-label="Row R, seat 5" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="R6" aria-label="Row R, seat 6" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="R7" aria-label="Row R, seat 7" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="R8" aria-label="Row R, seat 8" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="R9" aria-label="Row R, seat 9" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="R10" aria-label="Row R, seat 10" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="R11" aria-label="Row R, seat 11" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="R12" aria-label="Row R, seat 12" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="R13" aria-label="Row R, seat 13" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="R14" aria-label="Row R, seat 14" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="R15" aria-label="Row R, seat 15" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="R16" aria-label="Row R, seat 16" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="R17" aria-label="Row R, seat 17" aria-pressed="false"></button>
+					<button class="row__seat tooltip" data-tooltip="R18" aria-label="Row R, seat 18" aria-pressed="false"></button>
 				</div>
 			</div>
 			<!-- /rows -->
@@ -790,8 +804,7 @@
 			</ul>
 			<button class="action action--buy">Buy tickets</button>
 		</div><!-- /plan -->
-		<button class="action action--lookaround action--disabled" arial-label="Unlook View"></button>
-		<script src="js/classie.js"></script>
+		<button class="action action--lookaround action--disabled" aria-label="Look around" aria-pressed="false" inert></button>
 		<script src="js/main.js"></script>
 	</body>
 </html>

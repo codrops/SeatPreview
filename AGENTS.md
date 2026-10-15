@@ -31,19 +31,6 @@ Notes for coding agents working on this repo. Read [README.md](README.md) first 
 - The geometry lives in two places that must match: the Sass variables at the top of `component.scss`, and `row_front_gap`, `row_back`, `row_gap_amount`, `perspective` and `roomsize.y`/`z` in `main.js`. Change both together.
 - Plan seats and room seats match by index (`planseats[i]` is `seats[i]`). Reserved seats are marked only in the plan.
 
-## Variations
-
-| #   | Page         | What it does                                                                       | Notes            |
-| --- | ------------ | ---------------------------------------------------------------------------------- | ---------------- |
-| 01  | `index.html` | Pick a seat on the plan and the camera moves to that seat's view of the screen.    | The author's own. |
-
-## Adding a variation
-
-1. Copy `index.html` to `index<N>.html` and change what the variation changes. Keep the title, meta and frame the same on every page.
-2. The first time there's a second page, add a `.frame__demos` nav to the frame on every page: a compact numbered grid ("Variations 01 02 …"), the current page as a `<span class="frame__demo frame__demo--current">`, the others as links. The template puts it top right, but the seat plan is there, so place it somewhere else in `.frame`'s grid in `css/demo.css` and check it at every width.
-3. Reuse the demo's font (the Avenir Next stack in `demo.css`) and palette: `#272729` background, greens `#21c252`/`#57e683`/`#26AD4F`, red `#de6363`, the greys of the room.
-4. Add the page to the table above.
-
 ## Conventions
 
 - **Keyboard and screen readers.** Plan seats are `<button>`s labelled "Row X, seat N" with `aria-pressed` (free) or `aria-disabled="true"` (reserved). The plan is a single tab stop: `setTabSeat()` moves the roving `tabIndex`, `onPlanKeydown` handles the arrow keys. Controls that are out of sight are out of reach too: `inert` on the intro once it slides away, on the Look around toggle until it shows and on the play control while the video plays, and the plan is `visibility: hidden` until `.plan--shown`. Focus rings are `:focus-visible` in `demo.css`. Keep all of this when changing the markup.
